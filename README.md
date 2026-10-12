@@ -22,6 +22,12 @@ Open <http://localhost:5173>. Vite proxies `/v1` to `http://localhost:3000`, kee
 the SIWS challenge and session cookies same-origin. Override the backend with
 `VITE_API_PROXY_TARGET` when starting Vite.
 
+For the production split deployment, build with
+`VITE_API_URL=https://api.apys.co`. Browser requests include the API's HttpOnly
+session cookie; the backend must allow the exact UI origin
+`https://pools.apys.co` with credentialed CORS. Leave `VITE_API_URL` blank for
+local development so requests continue through Vite's `/v1` proxy.
+
 Fully wallet-signed boost transactions are submitted and confirmed by the
 backend using its server-side `SOLANA_RPC_URL`; no RPC credential is exposed to
 the browser.

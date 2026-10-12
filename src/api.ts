@@ -1,5 +1,7 @@
 import type { ApiErrorBody, BoostQuote, Portfolio, PreparedBoost, Session, SiwsChallenge, SubmittedBoost } from './types'
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/+$/, '')
+
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -14,9 +16,9 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
-    credentials: 'same-origin',
+    credentials: 'include',
     headers: {
       ...(init?.body ? { 'Content-Type': 'application/json' } : {}),
       ...init?.headers,
