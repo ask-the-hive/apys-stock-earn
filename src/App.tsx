@@ -286,7 +286,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
               </div>
               <div className="position-metrics">
                 <span><small>Position value</small><strong>{money(position.valueUsd)}</strong></span>
-                <span><small>24h APR</small><strong className="green">{percent(position.pool?.apr24hPercent ?? null)}</strong></span>
+                <span><small>7d APR</small><strong className="green">{percent(position.pool?.apr7dPercent ?? null)}</strong></span>
                 <span><small>Price</small><strong>{money(position.pool?.priceUsd ?? null, 4)}</strong></span>
                 <span>
                   <small className="metric-tooltip-label">
