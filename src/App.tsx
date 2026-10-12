@@ -286,7 +286,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
               </div>
               <div className="position-metrics">
                 <span><small>Position value</small><strong>{money(position.valueUsd)}</strong></span>
-                <span><small>7d APR</small><strong className="green">{percent(position.pool?.apr7dPercent ?? null)}</strong></span>
+                <span><small>30d APR</small><strong className="green">{percent(position.pool?.apr30dPercent ?? null)}</strong></span>
                 <span><small>Price</small><strong>{money(position.pool?.priceUsd ?? null, 4)}</strong></span>
                 <span>
                   <small className="metric-tooltip-label">
@@ -409,7 +409,7 @@ function BoostComposer({ stocks, usdcAvailable, solAvailable, asOf, onRefresh, r
               {advancedOpen && <div className="advanced-details">
                 <div className="composer-details">
                   <div><span>Pool price</span><strong>{money(selected.pool?.priceUsd ?? null, 4)}</strong></div>
-                  <div><span>Current APR</span><strong className="green">{percent(selected.pool?.apr24hPercent ?? null)}</strong></div>
+                  <div><span>30d APR</span><strong className="green">{percent(selected.pool?.apr30dPercent ?? null)}</strong></div>
                   <div><span>Position range</span><strong>±10%</strong></div>
                 </div>
                 <div className="slippage-row">
