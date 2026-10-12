@@ -8,7 +8,7 @@ import {
   CircleDollarSign,
   ExternalLink,
   LoaderCircle,
-  LogOut,
+  PieChart,
   RefreshCw,
   ShieldCheck,
   WalletCards,
@@ -31,10 +31,6 @@ const STOCK_LOGOS: Record<string, string> = {
 
 const SOL_LOGO = 'https://assets.coingecko.com/coins/images/4128/small/solana.png'
 const USDC_LOGO = 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png'
-
-function shortAddress(address: string, edge = 4): string {
-  return `${address.slice(0, edge)}…${address.slice(-edge)}`
-}
 
 function money(value: string | null, maximumFractionDigits = 2): string {
   if (value === null) return '—'
@@ -88,6 +84,39 @@ function AppLogo() {
   )
 }
 
+const APYS_URL = 'https://apys.co'
+
+function PrimaryNavigation() {
+  return (
+    <>
+      <header className="topbar">
+        <nav className="nav-layout" aria-label="Primary navigation">
+          <div className="nav-pod nav-secondary">
+            <a href={`${APYS_URL}/docs`}>Learn more</a>
+            <a href={`${APYS_URL}/blog`}>Blog</a>
+          </div>
+
+          <a className="nav-brand" href={APYS_URL} aria-label="APYS home">
+            <AppLogo />
+          </a>
+
+          <div className="nav-actions">
+            <div className="nav-pod nav-product-links">
+              <a href={`${APYS_URL}/portfolio`}>Portfolio</a>
+              <span aria-current="page">Pools</span>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <nav className="mobile-tabbar" aria-label="Primary navigation">
+        <a href={`${APYS_URL}/portfolio`}><PieChart /><span>Portfolio</span></a>
+        <a className="mobile-nav-brand" href={APYS_URL} aria-label="APYS home"><img src="/apys-mark.svg" alt="" /></a>
+      </nav>
+    </>
+  )
+}
+
 function AssetIcon({ src, alt, fallback, className = '' }: { src: string; alt: string; fallback: string; className?: string }) {
   const [failed, setFailed] = useState(false)
 
@@ -116,26 +145,7 @@ export function App() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <AppLogo />
-        <div className="network-pill"><span /> Solana mainnet</div>
-        {wallet.account ? (
-          <div className="wallet-actions">
-            <a className="address-pill" href={`${EXPLORER}/account/${wallet.account.address}`} target="_blank" rel="noreferrer">
-              <span className="status-dot" />
-              {shortAddress(wallet.account.address)}
-              <ExternalLink size={13} />
-            </a>
-            <button className="icon-button" type="button" onClick={() => void wallet.disconnect()} aria-label="Disconnect wallet">
-              <LogOut size={16} />
-            </button>
-          </div>
-        ) : (
-          <button className="button button-dark button-small" type="button" onClick={() => setPickerOpen(true)}>
-            <WalletCards size={16} /> Connect wallet
-          </button>
-        )}
-      </header>
+      <PrimaryNavigation />
 
       {wallet.account ? (
         <Dashboard />
@@ -159,7 +169,7 @@ function SignedOutDashboard({ onConnect, reconnect }: { onConnect: () => void; r
     <main className="dashboard signed-out-dashboard">
       <section className="panel composer-panel stocks-panel signed-out-panel">
         <div className="panel-heading">
-          <div><span className="section-kicker">Wallet</span><h2>Your portfolio</h2></div>
+          <div><h2>Your portfolio</h2></div>
           <span className="signed-out-badge">Not connected</span>
         </div>
         <div className="boost-stock-list signed-out-assets" aria-hidden="true">
@@ -187,7 +197,7 @@ function SignedOutDashboard({ onConnect, reconnect }: { onConnect: () => void; r
 
       <section className="panel positions-panel signed-out-positions">
         <div className="panel-heading">
-          <div><span className="section-kicker">Earning fees</span><h2>Your positions</h2></div>
+          <div><h2>Your positions</h2></div>
           <span className="stock-count">—</span>
         </div>
         <div className="empty-positions"><span>No wallet connected</span><small>Connect your wallet to load your LP positions.</small></div>
@@ -270,7 +280,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
 
       <section className="panel positions-panel">
         <div className="panel-heading">
-          <div><span className="section-kicker">Earning fees</span><h2>Your positions</h2></div>
+          <div><h2>Your positions</h2></div>
           <span className="stock-count">{portfolio.boosts.length}</span>
         </div>
         {portfolio.boosts.length ? <div className="position-grid">
@@ -353,7 +363,6 @@ function BoostComposer({ stocks, usdcAvailable, solAvailable, asOf, onRefresh, r
     return (
       <section className="panel composer-panel success-panel">
         <div className="success-mark"><Check /></div>
-        <span className="section-kicker">Confirmed onchain</span>
         <h2>Your LP is earning.</h2>
         <p>Your stock and USDC are now paired in a concentrated-liquidity position on Raydium.</p>
         <a className="button button-dark" href={`${EXPLORER}/tx/${success.signatures[0]}`} target="_blank" rel="noreferrer">View transaction <ExternalLink size={15} /></a>
@@ -365,7 +374,7 @@ function BoostComposer({ stocks, usdcAvailable, solAvailable, asOf, onRefresh, r
   return (
     <section className="panel composer-panel stocks-panel">
       <div className="panel-heading">
-        <div><span className="section-kicker">Wallet</span><h2>Your portfolio</h2></div>
+        <div><h2>Your portfolio</h2></div>
         <div className="stock-panel-meta">
           <span className="as-of">Updated {new Date(asOf).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           <button className="refresh-button" type="button" aria-label="Refresh portfolio" onClick={onRefresh} disabled={refreshing}><RefreshCw size={14} className={refreshing ? 'spin' : ''} /></button>
