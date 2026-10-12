@@ -27,7 +27,7 @@ const RAYDIUM_PORTFOLIO = 'https://raydium.io/portfolio/'
 const STOCK_LOGOS: Record<string, string> = {
   Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh: 'https://xstocks-metadata.backed.fi/logos/tokens/NVDAx.png',
   XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp: 'https://xstocks-metadata.backed.fi/logos/tokens/AAPLx.png',
-  SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb: 'https://logopng.com.br/logos/spacex-159.png',
+  SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb: '/spacex-x.svg',
   MSTRdWXMeZxdE8osAQy3fA4rvTY5rgummDSMEx6U7Nz: 'https://backpack.exchange/api/stock-logo/MSTR',
 }
 
