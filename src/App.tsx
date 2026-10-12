@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   CircleDollarSign,
+  CircleHelp,
   ExternalLink,
   LoaderCircle,
   PieChart,
@@ -21,6 +22,7 @@ import type { BoostQuote, Portfolio, Stock } from './types'
 import { useWallet } from './wallet/provider'
 
 const EXPLORER = 'https://solscan.io'
+const RAYDIUM_PORTFOLIO = 'https://raydium.io/portfolio/'
 
 const STOCK_LOGOS: Record<string, string> = {
   Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh: 'https://xstocks-metadata.backed.fi/logos/tokens/NVDAx.png',
@@ -41,19 +43,6 @@ function money(value: string | null, maximumFractionDigits = 2): string {
     currency: 'USD',
     maximumFractionDigits,
   }).format(number)
-}
-
-function compactMoney(value: string | null): string {
-  if (value === null) return '—'
-  const number = Number(value)
-  return Number.isFinite(number)
-    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', maximumFractionDigits: 1 }).format(number)
-    : '—'
-}
-
-function feeTier(bps: number | null): string {
-  if (bps === null) return '—'
-  return `${new Intl.NumberFormat('en-US', { maximumFractionDigits: 3 }).format(bps / 100)}%`
 }
 
 function percent(value: string | null): string {
@@ -285,7 +274,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
         </div>
         {portfolio.boosts.length ? <div className="position-grid">
           {portfolio.boosts.map((position) => (
-            <a key={position.positionNft} href={`${EXPLORER}/token/${position.positionNft}`} target="_blank" rel="noreferrer" className="position-card">
+            <a key={position.positionNft} href={RAYDIUM_PORTFOLIO} target="_blank" rel="noreferrer" className="position-card" aria-label={`Open ${position.stockSymbol} / USDC position on Raydium`} aria-describedby={`range-tooltip-${position.positionNft}`}>
               <div className="position-header">
                 <StockAssetIcon mint={position.stockMint} name={position.stockName} symbol={position.stockSymbol} />
                 <span className="position-identity">
@@ -298,16 +287,15 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
               <div className="position-metrics">
                 <span><small>Position value</small><strong>{money(position.valueUsd)}</strong></span>
                 <span><small>24h APR</small><strong className="green">{percent(position.pool?.apr24hPercent ?? null)}</strong></span>
-                <span><small>Fee tier</small><strong>{feeTier(position.pool?.feeRateBps ?? null)}</strong></span>
-                <span><small>Pool price</small><strong>{money(position.pool?.priceUsd ?? null, 4)}</strong></span>
-              </div>
-              <div className="position-details">
-                <span><small>Assets</small><strong>{position.stockAmount && position.usdcAmount ? `${tokenAmount(position.stockAmount.amount)} ${position.stockSymbol} + ${tokenAmount(position.usdcAmount.amount, 2)} USDC` : '—'}</strong></span>
-                <span><small>Price range</small><strong>{position.range ? `${money(position.range.lowerPriceUsd, 2)} – ${money(position.range.upperPriceUsd, 2)}` : '—'}</strong></span>
+                <span><small>Price</small><strong>{money(position.pool?.priceUsd ?? null, 4)}</strong></span>
+                <span>
+                  <small className="metric-tooltip-label">
+                    Range <CircleHelp aria-hidden="true" />
+                    <span className="metric-tooltip" id={`range-tooltip-${position.positionNft}`} role="tooltip">Your position earns trading fees only while the market price is within this range.</span>
+                  </small>
+                  <strong>{position.range ? `${money(position.range.lowerPriceUsd, 2)} – ${money(position.range.upperPriceUsd, 2)}` : '—'}</strong>
+                </span>
                 <span><small>Unclaimed fees</small><strong>{money(position.feesOwedUsd)}</strong></span>
-                <span><small>7d / 30d APR</small><strong>{percent(position.pool?.apr7dPercent ?? null)} / {percent(position.pool?.apr30dPercent ?? null)}</strong></span>
-                <span><small>Pool TVL</small><strong>{compactMoney(position.pool?.tvlUsd ?? null)}</strong></span>
-                <span><small>24h volume</small><strong>{compactMoney(position.pool?.volume24hUsd ?? null)}</strong></span>
               </div>
             </a>
           ))}
