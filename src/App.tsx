@@ -177,7 +177,7 @@ function SignedOutDashboard({ onConnect, reconnect }: { onConnect: () => void; r
         <div className="connection-gate">
           <div className="composer-orb"><WalletCards size={22} /></div>
           <h3>Connect to view your stocks.</h3>
-          <p>Your supported holdings, available USDC, and boosted positions will appear here.</p>
+          <p>Your supported holdings, available USDC, and fee-earning positions will appear here.</p>
           <button className="button button-dark" type="button" onClick={onConnect}>
             <WalletCards size={17} /> {reconnect ? 'Reconnect wallet' : 'Connect wallet'}
           </button>
@@ -187,7 +187,7 @@ function SignedOutDashboard({ onConnect, reconnect }: { onConnect: () => void; r
 
       <section className="panel positions-panel signed-out-positions">
         <div className="panel-heading">
-          <div><span className="section-kicker">Boosted</span><h2>Your positions</h2></div>
+          <div><span className="section-kicker">Earning fees</span><h2>Your positions</h2></div>
           <span className="stock-count">—</span>
         </div>
         <div className="empty-positions"><span>No wallet connected</span><small>Connect your wallet to load your LP positions.</small></div>
@@ -270,7 +270,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
 
       <section className="panel positions-panel">
         <div className="panel-heading">
-          <div><span className="section-kicker">Boosted</span><h2>Your positions</h2></div>
+          <div><span className="section-kicker">Earning fees</span><h2>Your positions</h2></div>
           <span className="stock-count">{portfolio.boosts.length}</span>
         </div>
         {portfolio.boosts.length ? <div className="position-grid">
@@ -301,7 +301,7 @@ function PortfolioDashboard({ portfolio, onRefresh, refreshing }: { portfolio: P
               </div>
             </a>
           ))}
-        </div> : <div className="empty-positions"><span>No boosted positions yet</span><small>Boost a stock above to create your first LP.</small></div>}
+        </div> : <div className="empty-positions"><span>No fee-earning positions yet</span><small>Choose Earn fees above to create your first LP.</small></div>}
       </section>
     </>
   )
@@ -394,7 +394,7 @@ function BoostComposer({ stocks, usdcAvailable, solAvailable, asOf, onRefresh, r
                 setAmount('')
                 setAdvancedOpen(false)
                 resetQuote()
-              }}>{active ? 'Close' : 'Boost'}</button>
+              }}>{active ? 'Close' : 'Earn fees'}</button>
               <div className="stock-balance"><small>Balance</small><strong>{tokenAmount(stock.balance.amount, 6)}</strong></div>
             </div>
             {active && selected && <div className="inline-boost-form">
@@ -430,7 +430,7 @@ function BoostComposer({ stocks, usdcAvailable, solAvailable, asOf, onRefresh, r
                 <>
                   {(quote.error || execute.error) && <div className="inline-error">{errorMessage(quote.error ?? execute.error)}</div>}
                   <button className="button button-dark button-wide" type="button" disabled={quote.isPending || !/^\d+(?:\.\d+)?$/.test(amount) || Number(amount) <= 0} onClick={() => quote.mutate({ stockMint: selected.mint, usdcAmount: amount, slippageBps })}>
-                    {quote.isPending ? <><LoaderCircle className="spin" size={17} /> Calculating match</> : <>Review boost <ArrowRight size={17} /></>}
+                    {quote.isPending ? <><LoaderCircle className="spin" size={17} /> Calculating match</> : <>Review fee earnings <ArrowRight size={17} /></>}
                   </button>
                 </>
               )}
@@ -446,7 +446,7 @@ function QuoteReview({ quote, pending, error, onConfirm, onCancel }: { quote: Bo
   const sufficient = Object.values(quote.balancesSufficient).every(Boolean)
   return (
     <div className="quote-review">
-      <div className="quote-title"><span>Boost summary</span></div>
+      <div className="quote-title"><span>Fee earnings summary</span></div>
       <div className="quote-pair">
         <div><small>You add</small><strong>{money(quote.usdc.amount, 4)} USDC</strong></div>
         <ArrowRight size={15} />
