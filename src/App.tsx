@@ -11,7 +11,6 @@ import {
   LogOut,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
   WalletCards,
   X,
   Zap,
@@ -141,7 +140,7 @@ export function App() {
       {wallet.account ? (
         <Dashboard />
       ) : (
-        <Landing onConnect={() => setPickerOpen(true)} reconnect={Boolean(wallet.rawAccount)} />
+        <SignedOutDashboard onConnect={() => setPickerOpen(true)} reconnect={Boolean(wallet.rawAccount)} />
       )}
 
       <footer className="footer">
@@ -155,23 +154,43 @@ export function App() {
   )
 }
 
-function Landing({ onConnect, reconnect }: { onConnect: () => void; reconnect: boolean }) {
+function SignedOutDashboard({ onConnect, reconnect }: { onConnect: () => void; reconnect: boolean }) {
   return (
-    <main className="landing utility-landing">
-      <section className="simple-hero-copy">
-        <div className="eyebrow"><Sparkles size={13} /> Stock boost</div>
-        <h1>Put your stocks<br />to work.</h1>
-        <p>Pair a stock you already own with USDC and earn trading fees through a focused Raydium position.</p>
-        <button className="button button-dark landing-cta" type="button" onClick={onConnect}>
-          <WalletCards size={17} /> {reconnect ? 'Reconnect wallet' : 'Connect wallet'}
-        </button>
-        <span className="custody-note"><ShieldCheck size={15} /> Noncustodial. You approve every transaction.</span>
+    <main className="dashboard signed-out-dashboard">
+      <section className="panel composer-panel stocks-panel signed-out-panel">
+        <div className="panel-heading">
+          <div><span className="section-kicker">Wallet</span><h2>Your portfolio</h2></div>
+          <span className="signed-out-badge">Not connected</span>
+        </div>
+        <div className="boost-stock-list signed-out-assets" aria-hidden="true">
+          <div className="boost-stock-row portfolio-asset-row">
+            <AssetIcon src={SOL_LOGO} alt="" fallback="S" />
+            <div className="stock-identity"><strong>SOL</strong><small>Solana</small></div>
+            <div className="stock-balance asset-balance-wide"><small>Balance</small><strong>—</strong></div>
+          </div>
+          <div className="boost-stock-row portfolio-asset-row">
+            <AssetIcon src={USDC_LOGO} alt="" fallback="$" />
+            <div className="stock-identity"><strong>USDC</strong><small>USD Coin</small></div>
+            <div className="stock-balance asset-balance-wide"><small>Balance</small><strong>—</strong></div>
+          </div>
+        </div>
+        <div className="connection-gate">
+          <div className="composer-orb"><WalletCards size={22} /></div>
+          <h3>Connect to view your stocks.</h3>
+          <p>Your supported holdings, available USDC, and boosted positions will appear here.</p>
+          <button className="button button-dark" type="button" onClick={onConnect}>
+            <WalletCards size={17} /> {reconnect ? 'Reconnect wallet' : 'Connect wallet'}
+          </button>
+          <span className="custody-note"><ShieldCheck size={14} /> Noncustodial. You approve every transaction.</span>
+        </div>
       </section>
 
-      <section className="utility-steps">
-        <article><span>01</span><div><h3>Choose a stock</h3><p>Use an eligible tokenized stock in your wallet.</p></div></article>
-        <article><span>02</span><div><h3>Choose an amount</h3><p>We calculate the stock match and LP range.</p></div></article>
-        <article><span>03</span><div><h3>Approve once</h3><p>Your position is created directly on Raydium.</p></div></article>
+      <section className="panel positions-panel signed-out-positions">
+        <div className="panel-heading">
+          <div><span className="section-kicker">Boosted</span><h2>Your positions</h2></div>
+          <span className="stock-count">—</span>
+        </div>
+        <div className="empty-positions"><span>No wallet connected</span><small>Connect your wallet to load your LP positions.</small></div>
       </section>
     </main>
   )

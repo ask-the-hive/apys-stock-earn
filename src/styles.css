@@ -47,20 +47,7 @@ a { color: inherit; text-decoration: none; }
 .button-wide { width: 100%; }
 .text-button { display: block; margin: 12px auto 0; border: 0; background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; }
 
-.landing { width: min(680px, calc(100% - 36px)); margin: 0 auto; padding: 104px 0 80px; position: relative; z-index: 1; }
-.simple-hero-copy { text-align: center; }
-.eyebrow, .section-kicker { color: #6b5912; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.eyebrow { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid rgba(121, 91, 0, .16); border-radius: 999px; background: rgba(255,255,255,.6); }
-.simple-hero-copy h1 { margin: 24px 0 18px; font-size: clamp(50px, 9vw, 78px); line-height: .94; letter-spacing: -.065em; font-weight: 500; }
-.simple-hero-copy > p { max-width: 490px; margin: 0 auto; color: #5e5e58; font-size: 16px; line-height: 1.65; }
-.landing-cta { min-width: 210px; margin-top: 30px; }
-.custody-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; color: var(--muted); font-size: 11px; }
-.utility-steps { margin-top: 92px; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: var(--panel); box-shadow: var(--shadow); }
-.utility-steps article { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 20px 24px; text-align: left; border-bottom: 1px solid var(--line); }
-.utility-steps article:last-child { border: 0; }
-.utility-steps article > span { color: #9a7800; font-size: 10px; font-weight: 700; padding-top: 2px; }
-.utility-steps h3 { margin: 0 0 4px; font-size: 13px; }
-.utility-steps p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.section-kicker { color: #6b5912; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 
 .dashboard { width: min(680px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 90px; min-height: 760px; position: relative; z-index: 1; }
 .dashboard-heading, .panel-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 22px; }
@@ -73,6 +60,14 @@ a { color: inherit; text-decoration: none; }
 .utility-aside { display: contents; }
 
 .composer-panel { padding: 28px; box-shadow: var(--shadow); }
+.signed-out-badge { padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; background: #f7f7f4; color: var(--muted); font-size: 9px; font-weight: 600; }
+.signed-out-assets { opacity: .6; }
+.connection-gate { min-height: 238px; margin-top: 18px; padding: 36px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px dashed #d9d6ca; border-radius: 18px; background: linear-gradient(180deg, #fffdf7, #fafaf8); }
+.connection-gate .composer-orb { margin-bottom: 13px; }
+.connection-gate h3 { margin: 0; font-size: 17px; letter-spacing: -.025em; }
+.connection-gate p { max-width: 340px; margin: 7px 0 18px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.custody-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px; color: var(--muted); font-size: 9px; }
+.signed-out-positions .stock-count { color: var(--muted); background: #ecece7; }
 .step-pill, .as-of { color: var(--muted); font-size: 10px; }
 .field-label { display: block; margin: 23px 0 8px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .field-row { display: flex; align-items: flex-end; justify-content: space-between; }
@@ -244,10 +239,6 @@ a { color: inherit; text-decoration: none; }
   .network-pill { display: none; }
   .address-pill { min-height: 39px; padding: 0 11px; }
   .icon-button { width: 39px; height: 39px; }
-  .landing { padding-top: 75px; }
-  .simple-hero-copy h1 { font-size: 54px; }
-  .simple-hero-copy > p { font-size: 14px; }
-  .utility-steps { margin-top: 70px; }
   .dashboard { padding-top: 28px; }
   .dashboard-heading .button { width: 42px; padding: 0; font-size: 0; }
   .panel, .composer-panel { padding: 20px; border-radius: 22px; }
